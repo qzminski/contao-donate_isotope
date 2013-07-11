@@ -16,7 +16,8 @@
  */
 ClassLoader::addClasses(array
 (
-	'Contao\IsotopeDonate' => 'system/modules/isotope_donate/classes/IsotopeDonate.php',
+	'Contao\IsotopeDonate'   => 'system/modules/isotope_donate/classes/IsotopeDonate.php',
+	'Contao\ModuleDonations' => 'system/modules/isotope_donate/modules/ModuleDonations.php'
 ));
 
 
@@ -25,5 +26,5 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
-	//'mod_faqlist' => 'system/modules/isotope_donate/templates/modules'
+	'mod_donations' => 'system/modules/isotope_donate/templates/modules'
 ));

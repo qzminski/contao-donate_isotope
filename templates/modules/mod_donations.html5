@@ -1,0 +1,38 @@
+
+<div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+  <?php if ($this->headline): ?>
+    <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+  <?php endif; ?>
+
+  <?php if ($this->categories): foreach ($this->categories as $category): ?>
+  <div class="category">
+    <h2><?php echo $category['name']; ?></h2>
+
+    <div class="description">
+      <?php echo $category['description']; ?>
+    </div>
+
+    <div class="objectives">
+      <?php foreach ($category['objectives'] as $objective): ?>
+      <div class="objective<?php if ($objective['completed']): ?> completed<?php endif; ?>">
+        <h3><?php echo $objective['name']; ?></h3>
+
+        <div class="description">
+	      <?php echo $objective['description']; ?>
+        </div>
+
+        <div class="amount"><?php echo $objective['amount']; ?></div>
+
+        <?php if ($objective['completed']): ?>
+        <div class="next_steps">
+          <?php echo $objective['nextSteps']; ?>
+        </div>
+        <?php endif; ?>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+  <?php endforeach; endif; ?>
+
+</div>

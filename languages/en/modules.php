@@ -15,3 +15,9 @@
  * Back end modules
  */
 $GLOBALS['TL_LANG']['MOD']['isotope_donate'] = array('Donations', 'Manage donations and their objectives');
+
+
+/**
+ * Back end modules
+ */
+$GLOBALS['TL_LANG']['FMD']['donations'] = array('Donations', 'Adds a categorized donation list to the page.');

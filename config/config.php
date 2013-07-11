@@ -22,3 +22,9 @@ array_insert($GLOBALS['BE_MOD']['content'], 1, array
 		'icon'   => 'system/modules/isotope_donate/assets/icon.png'
 	)
 ));
+
+
+/**
+ * Front end modules
+ */
+$GLOBALS['FE_MOD']['miscellaneous']['donations'] = 'ModuleDonations';
