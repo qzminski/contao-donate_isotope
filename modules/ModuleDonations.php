@@ -47,6 +47,8 @@ class ModuleDonations extends \Module
 			return $objTemplate->parse();
 		}
 
+		$this->import('FrontendUser', 'User');
+
 		return parent::generate();
 	}
 
@@ -62,6 +64,19 @@ class ModuleDonations extends \Module
 		if (!$objCategories->numRows)
 		{
 			return;
+		}
+
+		$strRedirect = '';
+
+		// Generate a redirect page
+		if ($this->jumpTo > 0)
+		{
+			$objJump = \PageModel::findByPk($this->jumpTo);
+
+			if ($objJump !== null)
+			{
+				$strRedirect = $this->generateFrontendUrl($objJump->row());
+			}
 		}
 
 		$arrCategories = array();
@@ -86,6 +101,20 @@ class ModuleDonations extends \Module
 				$arrObjectives[$objObjectives->id] = $objObjectives->row();
 				$arrObjectives[$objObjectives->id]['description'] = \String::toHtml5($objObjectives->description);
 				$arrObjectives[$objObjectives->id]['nextSteps'] = \String::toHtml5($objObjectives->nextSteps);
+				$arrObjectives[$objObjectives->id]['paypal_donate'] = false;
+
+				// Enable paypal donations
+				if (!$objObjectives->completed && $this->paypal_email != '')
+				{
+					$arrObjectives[$objObjectives->id]['paypal_donate'] = true;
+					$arrObjectives[$objObjectives->id]['paypal_email'] = $this->paypal_email;
+					$arrObjectives[$objObjectives->id]['paypal_item'] = $this->User->id . '_' . $objObjectives->id;
+
+					if ($strRedirect != '')
+					{
+						$arrObjectives[$objObjectives->id]['paypal_return'] = ampersand(\Environment::get('base') . $strRedirect . '?objective=' . $objObjectives->id);
+					}
+				}
 			}
 
 			$arrCategories[] = array
@@ -102,5 +131,17 @@ class ModuleDonations extends \Module
 		}
 
 		$this->Template->categories = $arrCategories;
+
+		// Generate a link to login page
+		if (!FE_USER_LOGGED_IN && $this->jumpTo_login > 0)
+		{
+
+			$objLoginPage = \PageModel::findByPk($this->jumpTo_login);
+
+			if ($objLoginPage !== null)
+			{
+				$this->Template->login = ampersand($this->generateFrontendUrl($objLoginPage->row()));
+			}
+		}
 	}
 }

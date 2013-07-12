@@ -19,7 +19,7 @@
         <h3><?php echo $objective['name']; ?></h3>
 
         <div class="description">
-	      <?php echo $objective['description']; ?>
+          <?php echo $objective['description']; ?>
         </div>
 
         <div class="amount"><?php echo $objective['amount']; ?></div>
@@ -27,6 +27,24 @@
         <?php if ($objective['completed']): ?>
         <div class="next_steps">
           <?php echo $objective['nextSteps']; ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($objective['paypal_donate']): ?>
+        <div class="donate">
+          <?php if (FE_USER_LOGGED_IN): ?>
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <input type="hidden" name="cmd" value="_donations">
+            <input type="hidden" name="business" value="<?php echo $objective['paypal_email']; ?>">
+            <input type="hidden" name="currency_code" value="EUR">
+            <input type="hidden" name="item_name" value="Isotope fundraising - <?php echo specialchars($objective['name']); ?>">
+            <input type="hidden" name="item_number" value="<?php echo $objective['paypal_item']; ?>">
+            <?php if ($objective['paypal_return']): ?><input type="hidden" name="return" value="<?php echo $objective['paypal_return']; ?>"><?php endif; ?>
+            <input type="image" src="http://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+          </form>
+          <?php elseif ($this->login): ?>
+		  <a href="<?php echo $this->login; ?>"><img src="http://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"></a>
+          <?php endif; ?>
         </div>
         <?php endif; ?>
       </div>
