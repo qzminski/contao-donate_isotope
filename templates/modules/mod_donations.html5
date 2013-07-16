@@ -42,8 +42,8 @@
             <?php if ($objective['paypal_return']): ?><input type="hidden" name="return" value="<?php echo $objective['paypal_return']; ?>"><?php endif; ?>
             <input type="image" src="http://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
           </form>
-          <?php elseif ($this->login): ?>
-		  <a href="<?php echo $this->login; ?>"><img src="http://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"></a>
+          <?php else: ?>
+		  <a href="<?php echo \Environment::get('request'); ?>#login"><img src="http://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"></a>
           <?php endif; ?>
         </div>
         <?php endif; ?>

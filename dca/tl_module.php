@@ -14,21 +14,12 @@
 /**
  * Add a palette to tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['donations'] = '{title_legend},name,headline,type;{config_legend},paypal_email;{redirect_legend:hide},jumpTo,jumpTo_login;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['donations'] = '{title_legend},name,headline,type;{config_legend},paypal_email;{redirect_legend:hide},jumpTo;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 
 /**
  * Add fields to tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['fields']['jumpTo_login'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['jumpTo_login'],
-	'exclude'                 => true,
-	'inputType'               => 'pageTree',
-	'eval'                    => array('fieldType'=>'radio', 'tl_class'=>'clr'),
-	'sql'                     => "int(10) unsigned NOT NULL default '0'"
-);
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['paypal_email'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['paypal_email'],

@@ -131,17 +131,5 @@ class ModuleDonations extends \Module
 		}
 
 		$this->Template->categories = $arrCategories;
-
-		// Generate a link to login page
-		if (!FE_USER_LOGGED_IN && $this->jumpTo_login > 0)
-		{
-
-			$objLoginPage = \PageModel::findByPk($this->jumpTo_login);
-
-			if ($objLoginPage !== null)
-			{
-				$this->Template->login = ampersand($this->generateFrontendUrl($objLoginPage->row()));
-			}
-		}
 	}
 }

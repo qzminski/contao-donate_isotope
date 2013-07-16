@@ -14,5 +14,4 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_module']['jumpTo_login'] = array('Login page', 'Here you can choose the page where user will be redirect to log in.');
 $GLOBALS['TL_LANG']['tl_module']['paypal_email'] = array('PayPal e-mail', 'Please enter the PayPal e-mail address which will receive donations.');
