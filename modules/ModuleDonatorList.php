@@ -63,12 +63,15 @@ class ModuleDonatorList extends \Module
 			return;
 		}
 
+		$count = 0;
 		$arrMembers = array();
 
 		// Generate members
 		while ($objMembers->next())
 		{
 			$arrMembers[$objMembers->id] = $objMembers->row();
+			$arrMembers[$objMembers->id]['class'] = trim(((++$count == 1) ? ' first' : '') . (($count == $objMembers->numRows) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
+			$arrMembers[$objMembers->id]['website'] = ampersand($objMembers->website);
 
 			switch ($objMembers->donate_list)
 			{

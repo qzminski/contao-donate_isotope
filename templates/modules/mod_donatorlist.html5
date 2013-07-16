@@ -5,10 +5,10 @@
     <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
   <?php endif; ?>
 
+  <ul>
   <?php if ($this->members): foreach ($this->members as $member): ?>
-  <div class="donator">
-    <span><?php echo $member['_display']; ?></span>
-  </div>
+    <li class="<?php echo $member['class']; ?>"><?php if ($member['website']): ?><a href="<?php echo $member['website']; ?>" target="_blank" rel="nofollow"><?php endif; ?><?php echo $member['_display']; ?><?php if ($member['website']): ?></a><?php endif; ?></li>
   <?php endforeach; endif; ?>
+  </ul>
 
 </div>
