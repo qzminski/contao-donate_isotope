@@ -14,7 +14,8 @@
 /**
  * Add a palette to tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['donations'] = '{title_legend},name,headline,type;{config_legend},paypal_email;{redirect_legend:hide},jumpTo;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['donations']   = '{title_legend},name,headline,type;{config_legend},paypal_email;{redirect_legend:hide},jumpTo;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['donatorlist'] = '{title_legend},name,headline,type;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 
 /**

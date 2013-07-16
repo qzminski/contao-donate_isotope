@@ -27,4 +27,5 @@ array_insert($GLOBALS['BE_MOD']['content'], 1, array
 /**
  * Front end modules
  */
-$GLOBALS['FE_MOD']['miscellaneous']['donations'] = 'ModuleDonations';
+$GLOBALS['FE_MOD']['miscellaneous']['donations']   = 'ModuleDonations';
+$GLOBALS['FE_MOD']['miscellaneous']['donatorlist'] = 'ModuleDonatorList';
