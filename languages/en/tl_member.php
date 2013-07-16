@@ -14,7 +14,7 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_member']['donate_list'] = array('Display on the list', 'Here you can choose whether the member will be displayed on the donator list.');
+$GLOBALS['TL_LANG']['tl_member']['donate_list'] = array('Display on the donators page', 'Here you can choose whether the member will be displayed on the donator list.');
 
 
 /**
