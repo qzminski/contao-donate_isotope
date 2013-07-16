@@ -146,7 +146,7 @@ $GLOBALS['TL_DCA']['tl_donation_category'] = array
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'textarea',
-			'eval'                    => array('mandatory'=>true, 'rte'=>'tinyMCE', 'translatableFor'=>'*'),
+			'eval'                    => array('rte'=>'tinyMCE', 'translatableFor'=>'*'),
 			'sql'                     => "text NULL"
 		)
 	)

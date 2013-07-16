@@ -18,9 +18,11 @@
       <div class="objective<?php if ($objective['completed']): ?> completed<?php endif; ?>">
         <h3><?php echo $objective['name']; ?></h3>
 
+        <?php if ($objective['description']): ?>
         <div class="description">
           <?php echo $objective['description']; ?>
         </div>
+        <?php endif; ?>
 
         <div class="amount"><?php echo $objective['amount']; ?></div>
 
