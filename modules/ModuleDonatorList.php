@@ -86,5 +86,6 @@ class ModuleDonatorList extends \Module
 		}
 
 		$this->Template->members = $arrMembers;
+		$this->Template->showDetails = $GLOBALS['TL_LANG']['MSC']['donate_details'];
 	}
 }
