@@ -1,71 +1,78 @@
-
 <div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
-    <?php if ($this->headline): ?>
-    <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
-    <?php endif; ?>
+<?php if ($this->headline): ?>
+<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+<?php endif; ?>
 
-      <?php if ($this->categories): foreach ($this->categories as $category): ?>
-      <ul class="category">
-          <li>
-              <h2><?php echo $category['name']; ?></h2>
-              <?php if ($category['description']): ?>
-              <div class="description">
-                  <?php echo $category['description']; ?>
-              </div>
-              <?php endif; ?>
-              <ul class="objectives">
-                  <?php foreach ($category['objectives'] as $objective): ?>
-                  <li class="objective<?php if ($objective['completed']): ?> completed<?php endif; ?>">
-                      <h3><?php echo $objective['name']; ?></h3>
-                      <div class="financial">
-                          <div class="goal_donate">
-                              <p class="amount">EUR <?php echo \System::getFormattedNumber($objective['amount']); ?></p>
-                              <?php if ($objective['paypal_donate']): ?>
-                              <div class="donate">
-                                  <?php if (FE_USER_LOGGED_IN): ?>
-                                  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                                      <input type="hidden" name="cmd" value="_donations">
-                                      <input type="hidden" name="business" value="<?php echo $objective['paypal_email']; ?>">
-                                      <input type="hidden" name="currency_code" value="EUR">
-                                      <input type="hidden" name="item_name" value="Isotope fundraising - <?php echo specialchars($objective['name']); ?>">
-                                      <input type="hidden" name="item_number" value="<?php echo $objective['paypal_item']; ?>">
-                                      <?php if ($objective['paypal_return']): ?><input type="hidden" name="return" value="<?php echo $objective['paypal_return']; ?>"><?php endif; ?>
-                                      <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
-                                  </form>
-                                  <?php else: ?>
-                                  <a href="<?php echo \Environment::get('request'); ?>#fundraising_login"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"></a>
-                                  <?php endif; ?>
-                              </div>
-                              <?php endif; ?>
-                          </div>
-                          <div class="progress progress-warning progress-striped active">
-                              <div class="bar" style="width: <?php echo $objective['percentage']; ?>%;"></div>
-                          </div>
-                      </div>
-                      <div class="fundraising-toggler">
-                          <p><?php echo $this->showDetails; ?></p>
-                      </div>
-                      <div class="fundraising-accordion">
-                          <div class="description">
-                              <?php echo $objective['description']; ?>
-                          </div>
+<?php if ($this->categories): foreach ($this->categories as $category): ?>
+<ul class="category">
+    <li>
+        <h2><?php echo $category['name']; ?></h2>
+        <?php if ($category['description']): ?>
+        <div class="description">
+            <?php echo $category['description']; ?>
+        </div>
+        <?php endif; ?>
+        <ul class="objectives">
+            <?php foreach ($category['objectives'] as $objective): ?>
+            <li class="objective<?php if ($objective['completed']): ?> completed<?php endif; ?>">
+                <h3><?php echo $objective['name']; ?></h3>
+                <div class="financial">
+                    <div class="goal_donate">
+                        <p class="amount">EUR <?php echo \System::getFormattedNumber($objective['amount']); ?></p>
+                        <?php if ($objective['paypal_donate']): ?>
+                        <div class="donate">
+                            <?php if (FE_USER_LOGGED_IN): ?>
+                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                                <input type="hidden" name="cmd" value="_donations">
+                                <input type="hidden" name="business" value="<?php echo $objective['paypal_email']; ?>">
+                                <input type="hidden" name="currency_code" value="EUR">
+                                <input type="hidden" name="item_name" value="Isotope fundraising - <?php echo specialchars($objective['name']); ?>">
+                                <input type="hidden" name="item_number" value="<?php echo $objective['paypal_item']; ?>">
+                                <?php if ($objective['paypal_return']): ?><input type="hidden" name="return" value="<?php echo $objective['paypal_return']; ?>"><?php endif; ?>
+                                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+                            </form>
+                            <?php else: ?>
+                            <a id="fundraising_login_source" href="<?php echo \Environment::get('request'); ?>#fundraising_login"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"></a>
+                            <?php endif; ?>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="progress <?php if ($objective['completed']): ?>progress-success<?php else: ?>progress-warning<?php endif; ?> progress-striped<?php if (!$objective['completed']): ?> active<?php endif; ?>">
+                        <div class="bar" style="width: <?php echo $objective['percentage']; ?>%">EUR <?php echo \System::getFormattedNumber($objective['donations']); ?> (<?php echo $objective['percentage']; ?>%)</div>
+                    </div>
+                </div>
+                <div class="fundraising-toggler">
+                    <p>Details anzeigen</p>
+                </div>
+                <div class="fundraising-accordion">
+                    <div class="description">
+                        <?php echo $objective['description']; ?>
+                    </div>
 
-                          <?php if ($objective['completed']): ?>
-                          <div class="next_steps">
-                              <?php echo $objective['nextSteps']; ?>
-                          </div>
-                          <?php endif; ?>
-                      </div>
-                  </li>
-                  <?php endforeach; ?>
-               </ul>
-          </li>
-      </ul>
-      <?php endforeach; endif; ?>
+                    <?php if ($objective['completed']): ?>
+                    <div class="next_steps">
+                        <?php echo $objective['nextSteps']; ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+    </li>
+</ul>
+<?php endforeach; endif; ?>
 </div>
 <script>
     (function($) {
         window.addEvent('domready', function() {
+            new Fx.SmoothScroll({
+                onScrolledTo: function(source, target) {
+                    if (source.get('id') == 'fundraising_login_source') {
+                        document.id('fundraising_login_target').set('tween', { duration: 3000 }).highlight('#f00');
+                    }
+                }
+            });
+
             new Fx.Accordion($$('div.fundraising-toggler'), $$('div.fundraising-accordion'), {
                 opacity: false,
                 display: -1,
