@@ -121,7 +121,7 @@ class ModuleDonations extends \Module
 				$fltAmount = floatval($objObjectives->amount);
 
 				// Calculate the percentage
-				if ($fltDonations >= $fltAmount)
+				if ($objObjectives->completed || $fltDonations >= $fltAmount)
 				{
 					$arrObjectives[$objObjectives->id]['percentage'] = 100;
 				}

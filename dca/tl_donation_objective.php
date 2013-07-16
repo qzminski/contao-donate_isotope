@@ -96,17 +96,10 @@ $GLOBALS['TL_DCA']['tl_donation_objective'] = array
 		)
 	),
 
-	// Subpalettes
-	'subpalettes' => array
-	(
-		'completed'                   => 'nextSteps'
-	),
-
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array('completed'),
-		'default'                     => '{name_legend},name,amount,description;{complete_legend},completed'
+		'default'                     => '{name_legend},name,amount,description;{complete_legend},completed,nextSteps'
 	),
 
 	// Fields
@@ -164,7 +157,7 @@ $GLOBALS['TL_DCA']['tl_donation_objective'] = array
 			'exclude'                 => true,
 			'filter'                  => true,
 			'inputType'               => 'checkbox',
-			'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'m12 clr'),
+			'eval'                    => array('tl_class'=>'m12 clr'),
 			'sql'                     => "char(1) NOT NULL default ''"
 		),
 		'nextSteps' => array
@@ -173,7 +166,7 @@ $GLOBALS['TL_DCA']['tl_donation_objective'] = array
 			'exclude'                 => true,
 			'inputType'               => 'text',
 			'inputType'               => 'textarea',
-			'eval'                    => array('mandatory'=>true, 'rte'=>'tinyMCE', 'translatableFor'=>'*', 'tl_class'=>'clr'),
+			'eval'                    => array('rte'=>'tinyMCE', 'translatableFor'=>'*', 'tl_class'=>'clr'),
 			'sql'                     => "text NULL"
 		)
 	)
