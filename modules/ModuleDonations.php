@@ -113,10 +113,14 @@ class ModuleDonations extends \Module
 
                 // Calculate the percentage
                 if ($objObjectives->completed || $fltDonations >= $fltAmount) {
-                    $arrObjectives[$objObjectives->id]['percentage'] = 100;
+                    $intPercentage = 100;
+                    $fltDonations = $fltAmount;
                 } else {
-                    $arrObjectives[$objObjectives->id]['percentage'] = round(($fltDonations / $fltAmount) * 100);
+                    $intPercentage = round(($fltDonations / $fltAmount) * 100);
                 }
+
+                $arrObjectives[$objObjectives->id]['percentage']    = $intPercentage;
+                $arrObjectives[$objObjectives->id]['donations']     = $fltDonations;
             }
 
             $arrCategories[] = array
