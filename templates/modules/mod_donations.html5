@@ -24,6 +24,10 @@
 
         <div class="amount"><?php echo $objective['amount']; ?></div>
 
+        <div class="progress progress-warning progress-striped active">
+		  	<div class="bar" style="width: <?php echo $objective['percentage']; ?>%;"></div>
+		</div>
+
         <?php if ($objective['completed']): ?>
         <div class="next_steps">
           <?php echo $objective['nextSteps']; ?>
@@ -43,7 +47,7 @@
             <input type="image" src="http://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
           </form>
           <?php else: ?>
-		  <a href="<?php echo \Environment::get('request'); ?>#login"><img src="http://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"></a>
+		  <a href="<?php echo \Environment::get('request'); ?>#fundraising_login"><img src="http://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"></a>
           <?php endif; ?>
         </div>
         <?php endif; ?>

@@ -55,6 +55,13 @@ $GLOBALS['TL_DCA']['tl_donation_category'] = array
 		),
 		'global_operations' => array
 		(
+			'donations' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['MOD']['isotope_donate'],
+				'href'                => 'table=tl_donation',
+				'icon'                => 'system/modules/donate_isotope/assets/icon.png',
+				'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="d"'
+			),
 			'all' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],

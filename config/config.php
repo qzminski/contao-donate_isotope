@@ -18,8 +18,8 @@ array_insert($GLOBALS['BE_MOD']['content'], 1, array
 (
 	'isotope_donate' => array
 	(
-		'tables' => array('tl_donation_category', 'tl_donation_objective'),
-		'icon'   => 'system/modules/isotope_donate/assets/icon.png'
+		'tables' => array('tl_donation', 'tl_donation_category', 'tl_donation_objective'),
+		'icon'   => 'system/modules/donate_isotope/assets/icon.png'
 	)
 ));
 

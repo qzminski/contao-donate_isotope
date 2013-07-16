@@ -85,6 +85,7 @@ class ModuleDonations extends \Module
 		while ($objCategories->next())
 		{
 			$objQuery = new DC_Multilingual_Query('tl_donation_objective');
+			$objQuery->addField("(SELECT SUM(amount) FROM tl_donation WHERE tl_donation.objective=t1.id) AS donations");
 			$objQuery->addWhere("t1.pid=?");
 			$objObjectives = $objQuery->getStatement()->execute($objCategories->id);
 
@@ -114,6 +115,19 @@ class ModuleDonations extends \Module
 					{
 						$arrObjectives[$objObjectives->id]['paypal_return'] = ampersand(\Environment::get('base') . $strRedirect . '?objective=' . $objObjectives->id);
 					}
+				}
+
+				$fltDonations = floatval($objObjectives->donations);
+				$fltAmount = floatval($objObjectives->amount);
+
+				// Calculate the percentage
+				if ($fltDonations >= $fltAmount)
+				{
+					$arrObjectives[$objObjectives->id]['percentage'] = 100;
+				}
+				else
+				{
+					$arrObjectives[$objObjectives->id]['percentage'] = round(($fltDonations / $fltAmount) * 100);
 				}
 			}
 
