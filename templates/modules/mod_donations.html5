@@ -14,7 +14,7 @@
         <?php endif; ?>
         <ul class="objectives">
             <?php foreach ($category['objectives'] as $objective): ?>
-            <li class="objective<?php if ($objective['completed']): ?> completed<?php endif; ?>">
+            <li id="objective_<?php echo $objective['alias']; ?>" class="objective<?php if ($objective['completed']): ?> completed<?php endif; ?>">
                 <h3><?php echo $objective['name']; ?></h3>
                 <div class="financial">
                     <div class="goal_donate">
