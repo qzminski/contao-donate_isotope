@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="fundraising-toggler">
-                    <p>Details anzeigen</p>
+                    <p><?php echo $GLOBALS['TL_LANG']['MSC']['more']; ?></p>
                 </div>
                 <div class="fundraising-accordion">
                     <div class="description">
