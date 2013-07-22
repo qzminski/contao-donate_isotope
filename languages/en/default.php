@@ -15,3 +15,5 @@
  * Miscellaneous
  */
 $GLOBALS['TL_LANG']['MSC']['donate_details'] = 'Show details';
+$GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_1'] = '%s Supporter';
+$GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_more'] = '%s Supporters';

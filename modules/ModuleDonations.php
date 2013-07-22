@@ -81,6 +81,7 @@ class ModuleDonations extends \Module
         while ($objCategories->next()) {
             $objQuery = new DC_Multilingual_Query('tl_donation_objective');
             $objQuery->addField("(SELECT SUM(amount) FROM tl_donation WHERE tl_donation.objective=t1.id) AS donations");
+            $objQuery->addField("(SELECT COUNT(id) FROM tl_donation WHERE tl_donation.objective=t1.id) AS numberOfDonators");
             $objQuery->addWhere("t1.pid=?");
             $objObjectives = $objQuery->getStatement()->execute($objCategories->id);
 
@@ -96,6 +97,9 @@ class ModuleDonations extends \Module
                 $arrObjectives[$objObjectives->id]['description'] = \String::toHtml5($objObjectives->description);
                 $arrObjectives[$objObjectives->id]['nextSteps'] = \String::toHtml5($objObjectives->nextSteps);
                 $arrObjectives[$objObjectives->id]['paypal_donate'] = false;
+                $arrObjectives[$objObjectives->id]['numberOfDonators'] = sprintf(
+                        ($objObjectives->numberOfDonators > 1) ? $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_more'] : $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_1'],
+                         $objObjectives->numberOfDonators);
 
                 // Enable paypal donations
                 if (!$objObjectives->completed && $this->paypal_email != '') {

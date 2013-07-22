@@ -40,6 +40,9 @@
                     <div class="progress <?php if ($objective['completed']): ?>progress-success<?php else: ?>progress-warning<?php endif; ?> progress-striped<?php if (!$objective['completed']): ?> active<?php endif; ?>">
                         <div class="bar" style="width: <?php echo $objective['percentage']; ?>%">EUR <?php echo \System::getFormattedNumber($objective['donations']); ?> (<?php echo $objective['percentage']; ?>%)</div>
                     </div>
+                    <p class="numberOfSupporters">
+                        <?php echo $objective['numberOfDonators']; ?>
+                    </p>
                 </div>
                 <div class="fundraising-toggler">
                     <p><?php echo $GLOBALS['TL_LANG']['MSC']['more']; ?></p>
