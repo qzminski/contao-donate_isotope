@@ -32,7 +32,7 @@
                                 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
                             </form>
                             <?php else: ?>
-                            <a id="fundraising_login_source" href="<?php echo \Environment::get('request'); ?>#fundraising_login"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"></a>
+                            <a id="fundraising_login_source" href="<?php echo \Environment::get('request'); ?>#fundraising_login"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate"></a>
                             <?php endif; ?>
                         </div>
                         <?php endif; ?>
