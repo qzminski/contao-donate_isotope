@@ -78,7 +78,6 @@
 
             new Fx.Accordion($$('div.fundraising-toggler'), $$('div.fundraising-accordion'), {
                 opacity: false,
-                display: -1,
                 alwaysHide: true,
                 onActive: function(tog, el) {
                     el.setProperty('aria-hidden', 'false');
