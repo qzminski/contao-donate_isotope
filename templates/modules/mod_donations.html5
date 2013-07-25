@@ -36,17 +36,15 @@
                                 <input type="submit" class="donate" name="submit" value="<?php echo $GLOBALS['TL_LANG']['MSC']['donate_now']; ?>">
                             </form>
                             <?php else: ?>
-                            <a id="fundraising_login_source" href="<?php echo \Environment::get('request'); ?>#fundraising_login"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate"></a>
+                            <a id="fundraising_login_source" href="<?php echo \Environment::get('request'); ?>#fundraising_login"><div class="button">Registrieren / Anmelden</div></a>
                             <?php endif; ?>
                         </div>
                         <?php endif; ?>
                     </div>
+                    <div class="supporter"><?php echo $objective['numberOfDonators']; ?> / EUR <?php echo \System::getFormattedNumber($objective['donations']); ?> (<?php echo $objective['percentage']; ?>%)</div>
                     <div class="progress <?php if ($objective['completed']): ?>progress-success<?php else: ?>progress-warning<?php endif; ?> progress-striped<?php if (!$objective['completed']): ?> active<?php endif; ?>">
-                        <div class="bar" style="width: <?php echo $objective['percentage']; ?>%">EUR <?php echo \System::getFormattedNumber($objective['donations']); ?> (<?php echo $objective['percentage']; ?>%)</div>
+                        <div class="bar" style="width: <?php echo $objective['percentage']; ?>%"></div>
                     </div>
-                    <p class="numberOfSupporters">
-                        <?php echo $objective['numberOfDonators']; ?>
-                    </p>
                 </div>
                 <div class="fundraising-toggler">
                     <p><?php echo $GLOBALS['TL_LANG']['MSC']['more']; ?></p>
