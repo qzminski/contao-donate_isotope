@@ -14,6 +14,7 @@
 /**
  * Miscellaneous
  */
+$GLOBALS['TL_LANG']['MSC']['donate_now'] = 'Jetzt unterstützen!';
 $GLOBALS['TL_LANG']['MSC']['donate_details'] = 'Details anzeigen';
 $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_1'] = '%s Supporter';
 $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_more'] = '%s Supporter';
