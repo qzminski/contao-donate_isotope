@@ -31,6 +31,8 @@
                                 <input type="hidden" name="item_name" value="Isotope fundraising - <?php echo $objective['name']; ?>">
                                 <input type="hidden" name="item_number" value="<?php echo $objective['paypal_item']; ?>">
                                 <?php if ($objective['paypal_return']): ?><input type="hidden" name="return" value="<?php echo $objective['paypal_return']; ?>"><?php endif; ?>
+                                <label class="amount" for="amount_<?php echo $objective['id']; ?>"><?php echo $GLOBALS['TL_LANG']['MSC']['donate_amount']; ?></label>
+                                <input type="text" id="amount_<?php echo $objective['id']; ?>" class="amount" name="amount" value="">
                                 <input type="submit" class="donate" name="submit" value="<?php echo $GLOBALS['TL_LANG']['MSC']['donate_now']; ?>">
                             </form>
                             <?php else: ?>
