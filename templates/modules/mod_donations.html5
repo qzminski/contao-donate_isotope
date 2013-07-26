@@ -73,7 +73,7 @@
             new Fx.SmoothScroll({
                 onScrolledTo: function(source, target) {
                     if (source.get('id') == 'fundraising_login_source') {
-                        document.id('fundraising_login_target').set('tween', { duration: 3000 }).highlight('#f00');
+                        document.id('fundraising_login_target').set('tween', { duration: 3000 }).highlight('#FF9640');
                     }
                 }
             });
