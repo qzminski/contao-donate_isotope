@@ -16,6 +16,7 @@
  */
 $GLOBALS['TL_LANG']['MSC']['donate_amount'] = 'Amount in EUR:';
 $GLOBALS['TL_LANG']['MSC']['donate_now'] = 'Back now!';
+$GLOBALS['TL_LANG']['MSC']['login_register'] = 'Login/Register';
 $GLOBALS['TL_LANG']['MSC']['donate_details'] = 'Show details';
 $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_1'] = '%s Supporter';
 $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_more'] = '%s Supporters';

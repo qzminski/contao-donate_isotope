@@ -36,7 +36,7 @@
                                 <input type="submit" class="donate" name="submit" value="<?php echo $GLOBALS['TL_LANG']['MSC']['donate_now']; ?>">
                             </form>
                             <?php else: ?>
-                            <a id="fundraising_login_source" href="<?php echo \Environment::get('request'); ?>#fundraising_login"><div class="button">Registrieren / Anmelden</div></a>
+                            <a id="fundraising_login_source" href="<?php echo \Environment::get('request'); ?>#fundraising_login"><div class="button"><?php echo $GLOBALS['TL_LANG']['MSC']['login_register']; ?></div></a>
                             <?php endif; ?>
                         </div>
                         <?php endif; ?>
