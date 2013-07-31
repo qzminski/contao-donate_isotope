@@ -37,4 +37,30 @@ class IsotopeDonate
 									   ->execute()
 									   ->language;
 	}
+
+    /*
+     * Protect a content element to donators only
+     * @param   \Database_Result
+     * @param   string
+     * @param   \ContentElement
+     * @return  string
+     */
+    public function protectElement($objRow, $strBuffer, $objElement)
+    {
+        if (!$objRow->donator_protected) {
+            return $strBuffer;
+        }
+
+        $objUser = \FrontendUser::getInstance();
+        if (!$objUser->id) {
+            return '';
+        }
+
+        $objDonation = \Database::getInstance()->prepare("SELECT tl_member.id FROM tl_member INNER JOIN tl_donation ON tl_member.id=tl_donation.member WHERE tl_member.id=?")->execute($objUser->id);
+        if (!$objDonation->numRows) {
+            return '';
+        }
+
+        return $strBuffer;
+    }
 }

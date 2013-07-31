@@ -29,3 +29,8 @@ array_insert($GLOBALS['BE_MOD']['content'], 1, array
  */
 $GLOBALS['FE_MOD']['miscellaneous']['donations']   = 'ModuleDonations';
 $GLOBALS['FE_MOD']['miscellaneous']['donatorlist'] = 'ModuleDonatorList';
+
+/**
+ * Hooks
+ */
+$GLOBALS['TL_HOOKS']['getContentElement'][] = array('IsotopeDonate', 'protectElement');
