@@ -56,7 +56,7 @@ class ModuleDonatorList extends \Module
 	 */
 	protected function compile()
 	{
-		$objMembers = $this->Database->execute("SELECT * FROM tl_member INNER JOIN tl_donation ON tl_member.id=tl_donation.member WHERE tl_member.donate_list!=''");
+		$objMembers = $this->Database->execute("SELECT * FROM tl_member INNER JOIN tl_donation ON tl_member.id=tl_donation.member WHERE tl_member.donate_list!='' ORDER BY tl_donation.datePaid");
 
 		if (!$objMembers->numRows)
 		{
