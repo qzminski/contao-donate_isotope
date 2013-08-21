@@ -83,6 +83,7 @@ class ModuleDonations extends \Module
             $objQuery->addField("(SELECT SUM(amount) FROM tl_donation WHERE tl_donation.objective=t1.id) AS donations");
             $objQuery->addField("(SELECT COUNT(id) FROM tl_donation WHERE tl_donation.objective=t1.id) AS numberOfDonators");
             $objQuery->addWhere("t1.pid=?");
+            $objQuery->addOrder('sorting');
             $objObjectives = $objQuery->getStatement()->execute($objCategories->id);
 
             if (!$objObjectives->numRows) {
