@@ -57,8 +57,15 @@ class ModuleDonations extends \Module
      */
     protected function compile()
     {
+		$arrCategoryIds = deserialize($this->donation_categories, true);
+		$arrWhere = array_fill(0, count($arrCategoryIds), 't1.id=?');
+
         $objQuery = new DC_Multilingual_Query('tl_donation_category');
-        $objCategories = $objQuery->getStatement()->execute();
+		$objQuery->addWhere('(' . implode(' OR ', $arrWhere) . ')');
+		foreach ($arrCategoryIds as $intCategoryId) {
+			$objQuery->addOrder('t1.id=?');
+		}
+        $objCategories = $objQuery->getStatement()->execute(array_merge($arrCategoryIds, array_reverse($arrCategoryIds)));
 
         if (!$objCategories->numRows) {
             return;
