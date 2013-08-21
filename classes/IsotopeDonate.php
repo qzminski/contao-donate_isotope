@@ -38,6 +38,21 @@ class IsotopeDonate
 									   ->language;
 	}
 
+	/**
+	 * @return array
+	 */
+	public static function getDonationCategories()
+	{
+		$objQuery = new DC_Multilingual_Query('tl_donation_category');
+		$objQuery->addOrder('name');
+		$objCategory = $objQuery->getStatement()->execute();
+		$arrCategories = array();
+		while ($objCategory->next()) {
+			$arrCategories[$objCategory->id] = $objCategory->name;
+		}
+		return $arrCategories;
+	}
+
     /*
      * Protect a content element to donators only
      * @param   \Database_Result

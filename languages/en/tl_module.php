@@ -14,4 +14,5 @@
 /**
  * Fields
  */
+$GLOBALS['TL_LANG']['tl_module']['donation_categories'] = array('Categories', 'Please select the used categories.');
 $GLOBALS['TL_LANG']['tl_module']['paypal_email'] = array('PayPal e-mail', 'Please enter the PayPal e-mail address which will receive donations.');

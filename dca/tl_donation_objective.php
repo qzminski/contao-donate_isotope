@@ -44,9 +44,8 @@ $GLOBALS['TL_DCA']['tl_donation_objective'] = array
 		'sorting' => array
 		(
 			'mode'                    => 4,
-			'fields'                  => array('name'),
+			'fields'                  => array('sorting'),
 			'headerFields'            => array('id', 'name'),
-			'flag'                    => 1,
 			'panelLayout'             => 'filter,search,limit',
 			'child_record_callback'   => array('tl_donation_objective', 'generateObjectiveRow')
 		),
@@ -109,10 +108,6 @@ $GLOBALS['TL_DCA']['tl_donation_objective'] = array
 		(
 			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
 		),
-		'tstamp' => array
-		(
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
-		),
 		'pid' => array
 		(
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
@@ -122,6 +117,14 @@ $GLOBALS['TL_DCA']['tl_donation_objective'] = array
 			'sql'                     => "varchar(2) NOT NULL default ''"
 		),
 		'lid' => array
+		(
+			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'sorting' => array
+		(
+			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'tstamp' => array
 		(
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
