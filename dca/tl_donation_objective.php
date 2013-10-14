@@ -92,14 +92,21 @@ $GLOBALS['TL_DCA']['tl_donation_objective'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_donation_objective']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif'
-			)
+			),
+			'toggle' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_donation_objective']['toggle'],
+				'icon'                => 'visible.gif',
+				'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
+				'button_callback'     => array('tl_donation_objective', 'toggleIcon')
+			),
 		)
 	),
 
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{name_legend},name,alias,amount,description;{complete_legend},completed,nextSteps'
+		'default'                     => '{name_legend},name,amount,description;{complete_legend},completed,nextSteps;{publish_legend},published'
 	),
 
 	// Fields
@@ -134,19 +141,6 @@ $GLOBALS['TL_DCA']['tl_donation_objective'] = array
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'translatableFor'=>'*', 'tl_class'=>'w50'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
-        'alias' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_donation_objective']['alias'],
-            'exclude'                 => true,
-            'search'                  => true,
-            'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50'),
-            'sql'                     => "varchar(255) NOT NULL default ''",
-            'save_callback' => array
-            (
-                array('tl_donation_objective', 'generateAlias')
-            )
-        ),
 		'amount' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_donation_objective']['amount'],
@@ -181,7 +175,16 @@ $GLOBALS['TL_DCA']['tl_donation_objective'] = array
 			'inputType'               => 'textarea',
 			'eval'                    => array('rte'=>'tinyMCE', 'translatableFor'=>'*', 'tl_class'=>'clr'),
 			'sql'                     => "text NULL"
-		)
+		),
+		'published' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_donation_objective']['published'],
+			'exclude'                 => true,
+			'filter'                  => true,
+			'inputType'               => 'checkbox',
+			'eval'                    => array('doNotCopy'=>true),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
 	)
 );
 
@@ -199,39 +202,61 @@ class tl_donation_objective extends Backend
 		return '<div>' . ($arrRow['completed'] ? '<span style="text-decoration:line-through">' : '') . $arrRow['name'] . ($arrRow['completed'] ? '</span>' : '') . '</div>';
 	}
 
-    /**
-     * Auto-generate the  alias if it has not been set yet
-     * @param mixed
-     * @param \DataContainer
-     * @return string
-     * @throws \Exception
-     */
-    public function generateAlias($varValue, DataContainer $dc)
-    {
-        $autoAlias = false;
 
-        // Generate alias if there is none
-        if ($varValue == '')
-        {
-            $autoAlias = true;
-            $varValue = standardize(String::restoreBasicEntities($dc->activeRecord->name));
-        }
+	/**
+	 * Return the "toggle visibility" button
+	 * @param array
+	 * @param string
+	 * @param string
+	 * @param string
+	 * @param string
+	 * @param string
+	 * @return string
+	 */
+	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
+	{
+		if (strlen(Input::get('tid')))
+		{
+			$this->toggleVisibility(Input::get('tid'), (Input::get('state') == 1));
+			$this->redirect($this->getReferer());
+		}
 
-        $objAlias = $this->Database->prepare("SELECT id FROM tl_donation_objective WHERE alias=?")
-            ->execute($varValue);
+		$href .= '&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
 
-        // Check whether the news alias exists
-        if ($objAlias->numRows > 1 && !$autoAlias)
-        {
-            throw new Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue));
-        }
+		if (!$row['published'])
+		{
+			$icon = 'invisible.gif';
+		}
 
-        // Add ID to alias
-        if ($objAlias->numRows && $autoAlias)
-        {
-            $varValue .= '-' . $dc->id;
-        }
+		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
+	}
 
-        return $varValue;
-    }
+
+	/**
+	 * Publish/unpublish an item
+	 * @param integer
+	 * @param boolean
+	 */
+	public function toggleVisibility($intId, $blnVisible)
+	{
+		$objVersions = new Versions('tl_donation_objective', $intId);
+		$objVersions->initialize();
+
+		// Trigger the save_callback
+		if (is_array($GLOBALS['TL_DCA']['tl_donation_objective']['fields']['published']['save_callback']))
+		{
+			foreach ($GLOBALS['TL_DCA']['tl_donation_objective']['fields']['published']['save_callback'] as $callback)
+			{
+				$this->import($callback[0]);
+				$blnVisible = $this->$callback[0]->$callback[1]($blnVisible, $this);
+			}
+		}
+
+		// Update the database
+		$this->Database->prepare("UPDATE tl_donation_objective SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")
+					   ->execute($intId);
+
+		$objVersions->create();
+		$this->log('A new version of record "tl_donation_objective.id='.$intId.'" has been created'.$this->getParentEntries('tl_donation_objective', $intId), 'tl_donation_objective toggleVisibility()', TL_GENERAL);
+	}
 }

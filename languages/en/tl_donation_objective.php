@@ -15,11 +15,11 @@
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_donation_objective']['name']        = array('Name', 'Please enter the objective name.');
-$GLOBALS['TL_LANG']['tl_donation_objective']['alias']       = array('Alias', 'Used for the anchor.');
 $GLOBALS['TL_LANG']['tl_donation_objective']['amount']      = array('Goal amount', 'Please enter the objective goal amount.');
 $GLOBALS['TL_LANG']['tl_donation_objective']['description'] = array('Description', 'Please enter the objective description.');
 $GLOBALS['TL_LANG']['tl_donation_objective']['completed']   = array('Objective completed', 'Mark the objective as completed.');
 $GLOBALS['TL_LANG']['tl_donation_objective']['nextSteps']   = array('Next steps', 'Please enter the objective next stesps.');
+$GLOBALS['TL_LANG']['tl_donation_objective']['published']   = array('Publish objective', 'Make the object visible on the website.');
 
 
 /**
@@ -27,6 +27,7 @@ $GLOBALS['TL_LANG']['tl_donation_objective']['nextSteps']   = array('Next steps'
  */
 $GLOBALS['TL_LANG']['tl_donation_objective']['name_legend']     = 'Name and description';
 $GLOBALS['TL_LANG']['tl_donation_objective']['complete_legend'] = 'Completed settings';
+$GLOBALS['TL_LANG']['tl_donation_objective']['publish_legend']  = 'Publish settings';
 
 
 /**
@@ -39,3 +40,4 @@ $GLOBALS['TL_LANG']['tl_donation_objective']['copy']       = array('Duplicate ob
 $GLOBALS['TL_LANG']['tl_donation_objective']['cut']        = array('Move objective', 'Move news objective ID %s');
 $GLOBALS['TL_LANG']['tl_donation_objective']['delete']     = array('Delete objective', 'Delete news objective ID %s');
 $GLOBALS['TL_LANG']['tl_donation_objective']['editheader'] = array('Edit category settings', 'Edit the category settings');
+$GLOBALS['TL_LANG']['tl_donation_objective']['toggle']     = array('Publish/unpublish objective', 'Publish/unpublish objective ID %s');
