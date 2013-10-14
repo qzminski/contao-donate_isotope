@@ -15,6 +15,7 @@
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_donation_objective']['name']        = array('Name', 'Please enter the objective name.');
+$GLOBALS['TL_LANG']['tl_donation_objective']['alias']       = array('Alias', 'Used for the anchor.');
 $GLOBALS['TL_LANG']['tl_donation_objective']['amount']      = array('Goal amount', 'Please enter the objective goal amount.');
 $GLOBALS['TL_LANG']['tl_donation_objective']['description'] = array('Description', 'Please enter the objective description.');
 $GLOBALS['TL_LANG']['tl_donation_objective']['completed']   = array('Objective completed', 'Mark the objective as completed.');

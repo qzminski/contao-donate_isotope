@@ -106,7 +106,7 @@ $GLOBALS['TL_DCA']['tl_donation_objective'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{name_legend},name,amount,description;{complete_legend},completed,nextSteps;{publish_legend},published'
+		'default'                     => '{name_legend},name,alias,amount,description;{complete_legend},completed,nextSteps;{publish_legend},published'
 	),
 
 	// Fields
@@ -141,6 +141,19 @@ $GLOBALS['TL_DCA']['tl_donation_objective'] = array
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'translatableFor'=>'*', 'tl_class'=>'w50'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
+		'alias' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_donation_objective']['alias'],
+            'exclude'                 => true,
+            'search'                  => true,
+            'inputType'               => 'text',
+            'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''",
+            'save_callback' => array
+            (
+                array('tl_donation_objective', 'generateAlias')
+            )
+        ),
 		'amount' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_donation_objective']['amount'],
@@ -201,6 +214,43 @@ class tl_donation_objective extends Backend
 	{
 		return '<div>' . ($arrRow['completed'] ? '<span style="text-decoration:line-through">' : '') . $arrRow['name'] . ($arrRow['completed'] ? '</span>' : '') . '</div>';
 	}
+
+
+	/**
+     * Auto-generate the  alias if it has not been set yet
+     * @param mixed
+     * @param \DataContainer
+     * @return string
+     * @throws \Exception
+     */
+    public function generateAlias($varValue, DataContainer $dc)
+    {
+        $autoAlias = false;
+
+        // Generate alias if there is none
+        if ($varValue == '')
+        {
+            $autoAlias = true;
+            $varValue = standardize(String::restoreBasicEntities($dc->activeRecord->name));
+        }
+
+        $objAlias = $this->Database->prepare("SELECT id FROM tl_donation_objective WHERE alias=?")
+            ->execute($varValue);
+
+        // Check whether the news alias exists
+        if ($objAlias->numRows > 1 && !$autoAlias)
+        {
+            throw new Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue));
+        }
+
+        // Add ID to alias
+        if ($objAlias->numRows && $autoAlias)
+        {
+            $varValue .= '-' . $dc->id;
+        }
+
+        return $varValue;
+    }
 
 
 	/**

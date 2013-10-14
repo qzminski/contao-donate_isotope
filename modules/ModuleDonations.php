@@ -21,136 +21,125 @@ namespace Contao;
 class ModuleDonations extends \Module
 {
 
-	/**
-	 * Template
-	 * @var string
-	 */
-	protected $strTemplate = 'mod_donations';
+    /**
+     * Template
+     * @var string
+     */
+    protected $strTemplate = 'mod_donations';
 
 
-	/**
-	 * Display a wildcard in the back end
-	 * @return string
-	 */
-	public function generate()
-	{
-		if (TL_MODE == 'BE')
-		{
-			$objTemplate = new \BackendTemplate('be_wildcard');
+    /**
+     * Display a wildcard in the back end
+     * @return string
+     */
+    public function generate()
+    {
+        if (TL_MODE == 'BE') {
+            $objTemplate = new \BackendTemplate('be_wildcard');
 
-			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['donations'][0]) . ' ###';
-			$objTemplate->title = $this->headline;
-			$objTemplate->id = $this->id;
-			$objTemplate->link = $this->name;
-			$objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['donations'][0]) . ' ###';
+            $objTemplate->title = $this->headline;
+            $objTemplate->id = $this->id;
+            $objTemplate->link = $this->name;
+            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
 
-			return $objTemplate->parse();
-		}
+            return $objTemplate->parse();
+        }
 
-		$this->import('FrontendUser', 'User');
+        $this->import('FrontendUser', 'User');
 
-		return parent::generate();
-	}
+        return parent::generate();
+    }
 
 
-	/**
-	 * Generate the module
-	 */
-	protected function compile()
-	{
-		$objQuery = new DC_Multilingual_Query('tl_donation_category');
-		$objCategories = $objQuery->getStatement()->execute();
+    /**
+     * Generate the module
+     */
+    protected function compile()
+    {
+        $objQuery = new DC_Multilingual_Query('tl_donation_category');
+        $objCategories = $objQuery->getStatement()->execute();
 
-		if (!$objCategories->numRows)
-		{
-			return;
-		}
+        if (!$objCategories->numRows) {
+            return;
+        }
 
-		$strRedirect = '';
+        $strRedirect = '';
 
-		// Generate a redirect page
-		if ($this->jumpTo > 0)
-		{
-			$objJump = \PageModel::findByPk($this->jumpTo);
+        // Generate a redirect page
+        if ($this->jumpTo > 0) {
+            $objJump = \PageModel::findByPk($this->jumpTo);
 
-			if ($objJump !== null)
-			{
-				$strRedirect = $this->generateFrontendUrl($objJump->row());
-			}
-		}
+            if ($objJump !== null) {
+                $strRedirect = $this->generateFrontendUrl($objJump->row());
+            }
+        }
 
-		$arrCategories = array();
+        $arrCategories = array();
 
-		// Generate categories
-		while ($objCategories->next())
-		{
-			$objQuery = new DC_Multilingual_Query('tl_donation_objective');
-			$objQuery->addField("(SELECT SUM(amount) FROM tl_donation WHERE tl_donation.objective=t1.id) AS donations");
-			$objQuery->addWhere("t1.pid=?");
+        // Generate categories
+        while ($objCategories->next()) {
+            $objQuery = new DC_Multilingual_Query('tl_donation_objective');
+            $objQuery->addField("(SELECT SUM(amount) FROM tl_donation WHERE tl_donation.objective=t1.id) AS donations");
+            $objQuery->addField("(SELECT COUNT(id) FROM tl_donation WHERE tl_donation.objective=t1.id) AS numberOfDonators");
+            $objQuery->addWhere("t1.pid=?");
+            $objObjectives = $objQuery->getStatement()->execute($objCategories->id);
 
-			if (!BE_USER_LOGGED_IN)
-			{
-				$objQuery->addWhere("t1.published=1");
-			}
+            if (!$objObjectives->numRows) {
+                continue;
+            }
 
-			$objObjectives = $objQuery->getStatement()->execute($objCategories->id);
+            $arrObjectives = array();
 
-			if (!$objObjectives->numRows)
-			{
-				continue;
-			}
+            // Generate objectives
+            while ($objObjectives->next()) {
+                $arrObjectives[$objObjectives->id] = $objObjectives->row();
+                $arrObjectives[$objObjectives->id]['description'] = \String::toHtml5($objObjectives->description);
+                $arrObjectives[$objObjectives->id]['nextSteps'] = \String::toHtml5($objObjectives->nextSteps);
+                $arrObjectives[$objObjectives->id]['paypal_donate'] = false;
+                $arrObjectives[$objObjectives->id]['numberOfDonators'] = sprintf(
+                        ($objObjectives->numberOfDonators > 1) ? $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_more'] : $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_1'],
+                         $objObjectives->numberOfDonators);
 
-			$arrObjectives = array();
+                // Enable paypal donations
+                if (!$objObjectives->completed && $this->paypal_email != '') {
+                    $arrObjectives[$objObjectives->id]['paypal_donate'] = true;
+                    $arrObjectives[$objObjectives->id]['paypal_email'] = $this->paypal_email;
+                    $arrObjectives[$objObjectives->id]['paypal_item'] = $this->User->id . '_' . $objObjectives->id;
 
-			// Generate objectives
-			while ($objObjectives->next())
-			{
-				$arrObjectives[$objObjectives->id] = $objObjectives->row();
-				$arrObjectives[$objObjectives->id]['description'] = \String::toHtml5($objObjectives->description);
-				$arrObjectives[$objObjectives->id]['nextSteps'] = \String::toHtml5($objObjectives->nextSteps);
-				$arrObjectives[$objObjectives->id]['paypal_donate'] = false;
+                    if ($strRedirect != '') {
+                        $arrObjectives[$objObjectives->id]['paypal_return'] = ampersand(\Environment::get('base') . $strRedirect . '?objective=' . $objObjectives->id);
+                    }
+                }
 
-				// Enable paypal donations
-				if (!$objObjectives->completed && $this->paypal_email != '')
-				{
-					$arrObjectives[$objObjectives->id]['paypal_donate'] = true;
-					$arrObjectives[$objObjectives->id]['paypal_email'] = $this->paypal_email;
-					$arrObjectives[$objObjectives->id]['paypal_item'] = $this->User->id . '_' . $objObjectives->id;
+                $fltDonations = floatval($objObjectives->donations);
+                $fltAmount = floatval($objObjectives->amount);
 
-					if ($strRedirect != '')
-					{
-						$arrObjectives[$objObjectives->id]['paypal_return'] = ampersand(\Environment::get('base') . $strRedirect . '?objective=' . $objObjectives->id);
-					}
-				}
+                // Calculate the percentage
+                if ($objObjectives->completed || $fltDonations >= $fltAmount) {
+                    $intPercentage = 100;
+                    $fltDonations = $fltAmount;
+                } else {
+                    $intPercentage = round(($fltDonations / $fltAmount) * 100);
+                }
 
-				$fltDonations = floatval($objObjectives->donations);
-				$fltAmount = floatval($objObjectives->amount);
+                $arrObjectives[$objObjectives->id]['percentage']    = $intPercentage;
+                $arrObjectives[$objObjectives->id]['donations']     = $fltDonations;
+            }
 
-				// Calculate the percentage
-				if ($objObjectives->completed || $fltDonations >= $fltAmount)
-				{
-					$arrObjectives[$objObjectives->id]['percentage'] = 100;
-				}
-				else
-				{
-					$arrObjectives[$objObjectives->id]['percentage'] = round(($fltDonations / $fltAmount) * 100);
-				}
-			}
+            $arrCategories[] = array
+            (
+                'name' => $objCategories->name,
+                'description' => \String::toHtml5($objCategories->description),
+                'objectives' => $arrObjectives
+            );
+        }
 
-			$arrCategories[] = array
-			(
-				'name' => $objCategories->name,
-				'description' => \String::toHtml5($objCategories->description),
-				'objectives' => $arrObjectives
-			);
-		}
+        if (empty($arrCategories)) {
+            return;
+        }
 
-		if (empty($arrCategories))
-		{
-			return;
-		}
-
-		$this->Template->categories = $arrCategories;
-		$this->Template->message = $GLOBALS['TL_LANG']['MSC']['donate_message'];
-	}
+        $this->Template->categories = $arrCategories;
+        $this->Template->message = $GLOBALS['TL_LANG']['MSC']['donate_message'];
+    }
 }
