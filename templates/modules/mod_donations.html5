@@ -22,7 +22,8 @@
                         <?php if ($objective['paypal_donate']): ?>
                         <div class="donate">
                             <?php if (FE_USER_LOGGED_IN): ?>
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                            <form action="https://www.paypal.com/cgi-bin/webscr" class="paypal_form" method="post">
+                            	<p class="paypal_message invisible"><?php echo $this->message; ?></p>
                                 <input type="hidden" name="cmd" value="_xclick">
                                 <input type="hidden" name="charset" value="utf-8">
                                 <input type="hidden" name="business" value="<?php echo $objective['paypal_email']; ?>">
@@ -121,6 +122,21 @@
             });
             $$('div.fundraising-accordion').each(function(el) {
                 el.setProperty('role', 'tabpanel');
+            });
+            $$('.paypal_form').each(function(el) {
+                var message = el.getElement('.paypal_message');
+                el.addEvent('submit', function(e) {
+                    var limit = 50;
+                    var amount = $(this).getElement('input[name="amount"]').get('value');
+                    if (amount < limit) {
+                        if (message.hasClass('invisible')) {
+                            e.preventDefault();
+                        }
+                        message.removeClass('invisible');
+                    } else {
+                        message.addClass('invisible');
+                    }
+                });
             });
         });
     })(document.id);

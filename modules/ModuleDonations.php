@@ -151,5 +151,6 @@ class ModuleDonations extends \Module
 		}
 
 		$this->Template->categories = $arrCategories;
+		$this->Template->message = $GLOBALS['TL_LANG']['MSC']['donate_message'];
 	}
 }
