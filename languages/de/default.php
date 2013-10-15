@@ -20,4 +20,4 @@ $GLOBALS['TL_LANG']['MSC']['login_register'] = 'Anmelden/Registrieren';
 $GLOBALS['TL_LANG']['MSC']['donate_details'] = 'Details anzeigen';
 $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_1'] = '%s Supporter';
 $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_more'] = '%s Supporter';
-$GLOBALS['TL_LANG']['MSC']['donate_message'] = 'We would like to thank you for considering to donate. However, with an amount below 50 euros, we actually have more expenses for book keeping than we actually get from you.';
+$GLOBALS['TL_LANG']['MSC']['donate_message'] = 'Der buchhalterische Aufwand bei Beträgen unter EUR 50.00 ist leider grösser als der Ertrag. Es wäre schön, wenn du den Betrag von EUR 50.00 in Erwägung ziehen würdest. Danke!';
