@@ -83,6 +83,10 @@ class ModuleDonations extends \Module
             $objQuery->addField("(SELECT SUM(amount) FROM tl_donation WHERE tl_donation.objective=t1.id) AS donations");
             $objQuery->addField("(SELECT COUNT(id) FROM tl_donation WHERE tl_donation.objective=t1.id) AS numberOfDonators");
             $objQuery->addWhere("t1.pid=?");
+            if (BE_USER_LOGGED_IN === false) {
+                $objQuery->addWhere("t1.published=1");
+            }
+
             $objObjectives = $objQuery->getStatement()->execute($objCategories->id);
 
             if (!$objObjectives->numRows) {
@@ -98,8 +102,8 @@ class ModuleDonations extends \Module
                 $arrObjectives[$objObjectives->id]['nextSteps'] = \String::toHtml5($objObjectives->nextSteps);
                 $arrObjectives[$objObjectives->id]['paypal_donate'] = false;
                 $arrObjectives[$objObjectives->id]['numberOfDonators'] = sprintf(
-                        ($objObjectives->numberOfDonators > 1) ? $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_more'] : $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_1'],
-                         $objObjectives->numberOfDonators);
+                    ($objObjectives->numberOfDonators > 1) ? $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_more'] : $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_1'],
+                    $objObjectives->numberOfDonators);
 
                 // Enable paypal donations
                 if (!$objObjectives->completed && $this->paypal_email != '') {
