@@ -17,8 +17,8 @@
             <li id="objective_<?php echo $objective['alias']; ?>" class="objective<?php if ($objective['completed']): ?> completed<?php endif; ?>">
                 <h3><?php echo $objective['name']; ?></h3>
                 <div class="financial">
+                    <p class="paypal_message invisible"><?php echo $this->message; ?></p>
                     <div class="goal_donate">
-                        <p class="paypal_message invisible"><?php echo $this->message; ?></p>
                         <p class="amount">EUR <?php echo \System::getFormattedNumber($objective['amount']); ?></p>
                         <?php if ($objective['paypal_donate']): ?>
                         <div class="donate">
