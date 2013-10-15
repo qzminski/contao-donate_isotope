@@ -18,12 +18,12 @@
                 <h3><?php echo $objective['name']; ?></h3>
                 <div class="financial">
                     <div class="goal_donate">
+                        <p class="paypal_message invisible"><?php echo $this->message; ?></p>
                         <p class="amount">EUR <?php echo \System::getFormattedNumber($objective['amount']); ?></p>
                         <?php if ($objective['paypal_donate']): ?>
                         <div class="donate">
                             <?php if (FE_USER_LOGGED_IN): ?>
                             <form action="https://www.paypal.com/cgi-bin/webscr" class="paypal_form" method="post">
-                            	<p class="paypal_message invisible"><?php echo $this->message; ?></p>
                                 <input type="hidden" name="cmd" value="_xclick">
                                 <input type="hidden" name="charset" value="utf-8">
                                 <input type="hidden" name="business" value="<?php echo $objective['paypal_email']; ?>">
@@ -124,7 +124,7 @@
             $$('div.fundraising-accordion').each(function(el) {
                 el.setProperty('role', 'tabpanel');
             });
-            $$('.paypal_form').each(function(el) {
+            $$('.objective').each(function(el) {
                 var message = el.getElement('.paypal_message');
                 el.addEvent('submit', function(e) {
                     var limit = 50;
