@@ -106,7 +106,7 @@ class ModuleDonations extends \Module
                     $objObjectives->numberOfDonators);
 
                 // Enable paypal donations
-                if (!$objObjectives->completed && $this->paypal_email != '') {
+                if ($this->paypal_email != '') {
                     $arrObjectives[$objObjectives->id]['paypal_donate'] = true;
                     $arrObjectives[$objObjectives->id]['paypal_email'] = $this->paypal_email;
                     $arrObjectives[$objObjectives->id]['paypal_item'] = $this->User->id . '_' . $objObjectives->id;
