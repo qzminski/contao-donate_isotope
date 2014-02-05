@@ -20,7 +20,7 @@
                     <p class="paypal_message invisible"><?php echo $this->message; ?></p>
                     <div class="goal_donate">
                         <p class="amount">EUR <?php echo \System::getFormattedNumber($objective['amount']); ?></p>
-                        <?php if ($objective['paypal_donate'] && !$objective['completed']): ?>
+                        <?php if ($objective['paypal_donate']): ?>
                         <div class="donate">
                             <?php if (FE_USER_LOGGED_IN): ?>
                             <form action="https://www.paypal.com/cgi-bin/webscr" class="paypal_form" method="post">
