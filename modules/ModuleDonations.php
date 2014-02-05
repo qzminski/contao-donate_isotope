@@ -102,8 +102,8 @@ class ModuleDonations extends \Module
                 $arrObjectives[$objObjectives->id]['nextSteps'] = \String::toHtml5($objObjectives->nextSteps);
                 $arrObjectives[$objObjectives->id]['paypal_donate'] = false;
                 $arrObjectives[$objObjectives->id]['numberOfDonators'] = sprintf(
-                    ($objObjectives->numberOfDonators > 1) ? $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_more'] : $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_1'],
-                    $objObjectives->numberOfDonators);
+                        ($objObjectives->numberOfDonators > 1) ? $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_more'] : $GLOBALS['TL_LANG']['MSC']['donate_numberOfDonators_1'],
+                         $objObjectives->numberOfDonators);
 
                 // Enable paypal donations
                 if ($this->paypal_email != '') {
@@ -118,16 +118,7 @@ class ModuleDonations extends \Module
 
                 $fltDonations = floatval($objObjectives->donations);
                 $fltAmount = floatval($objObjectives->amount);
-
-                // Calculate the percentage
-                if ($objObjectives->completed || $fltDonations >= $fltAmount) {
-                    $intPercentage = 100;
-                    $fltDonations = $fltAmount;
-                } else {
-                    $intPercentage = round(($fltDonations / $fltAmount) * 100);
-                }
-
-                $arrObjectives[$objObjectives->id]['percentage']    = $intPercentage;
+                $arrObjectives[$objObjectives->id]['percentage']    = round(($fltDonations / $fltAmount) * 100);
                 $arrObjectives[$objObjectives->id]['donations']     = $fltDonations;
             }
 
